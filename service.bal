@@ -8,11 +8,11 @@ import ballerinax/mysql.driver as _;
 
 configurable int api_port_sec = 9191;
 
-configurable string host = "sahackathon.mysql.database.azure.com";
-configurable int port = 3306;
-configurable string user = "choreo";
-configurable string password = "wso2!234";
-configurable string database = "laslo";
+configurable string host = ?;//"sahackathon.mysql.database.azure.com";
+configurable int port = ?;//3306;
+configurable string user = ?;//"choreo";
+configurable string password = ?;//"wso2!234";
+configurable string database = ?;//"laslo";
 
 type catalog record {
     string id;
