@@ -8,11 +8,11 @@ import ballerinax/mysql.driver as _;
 
 configurable int api_port_sec = 9191;
 
-configurable string host = ?;//"sahackathon.mysql.database.azure.com";
-configurable int port = ?;//3306;
-configurable string user = ?;//"choreo";
-configurable string password = ?;//"wso2!234";
-configurable string database = ?;//"laslo";
+configurable string host = "sahackathon.mysql.database.azure.com";
+configurable int port = 3306;
+configurable string user = "choreo";
+configurable string password = "wso2!234";
+configurable string database = "laslo";
 
 type catalog record {
     string id;
@@ -73,6 +73,20 @@ http:JwtValidatorConfig config = {
                 VALUES (${post.id}, ${post.title}, ${post.description}, ${post.includes}, ${post.intended_for}, ${post.color}, ${post.material})`;
             sql:ExecutionResult _ = check mysqlClient->execute(updateQuery);
             
+        }
+
+
+        isolated resource function get catalog() returns catalog|http:NotFound|error {
+            
+            sql:ParameterizedQuery query = `SELECT 	(id, title, description, includes, intended_for, color, material) from catalog 
+                                           `;
+
+            catalog|sql:Error result = mysqlClient->queryRow(query);
+            if result is sql:NoRowsError {
+                return http:NOT_FOUND;
+            } else {
+                return result;
+            }
         }
 
 
